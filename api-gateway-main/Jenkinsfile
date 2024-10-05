@@ -9,23 +9,23 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git url: 'git@github.com:chaitanyakatore/api-gateway.git', branch: 'main'
+                git url: 'https://github.com/chaitanyakatore/api-gateway.git', branch: 'main'
             }
         }
         stage('Build') {
             steps {
-                sh "mvn clean install -DskipTests"
+                bat "mvn clean install -DskipTests"
             }
         }
         stage('Test') {
             steps {
-                sh "mvn test"
+                bat "mvn test"
             }
         }
         stage('Deploy') {
             steps {
-                sh "docker build -t auth-image ."
-                sh "docker run -p 8060:8060 -d --name auth-container auth-image"
+                bat "docker build -t api-gateway-image ."
+                bat "docker run -p 8060:8060 -d --name api-gateway-container api-gateway-image"
             }
         }
     }
